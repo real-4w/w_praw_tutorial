@@ -30,6 +30,21 @@ class RedditSource(Source):
   def fetch(self):
     pass
 
+class RedditHotNZG(RedditSource):
+
+  def __init__(self) -> None:
+    self.reddit_con = super().connect()
+    self.hot_submissions = []
+
+  def fetch(self, limit: int):
+    self.hot_submissions = self.reddit_con.subreddit('nzgirlsgw').new(limit=limit)
+
+  def __repr__(self):
+    urls = []
+    for submission in self.hot_submissions:
+      urls.append(vars(submission)['url'])
+    return '\n'.join(urls)
+
 class RedditHotProgramming(RedditSource):
 
   def __init__(self) -> None:
@@ -37,7 +52,7 @@ class RedditHotProgramming(RedditSource):
     self.hot_submissions = []
 
   def fetch(self, limit: int):
-    self.hot_submissions = self.reddit_con.subreddit('nzgirlsgw').hot(limit=limit)
+    self.hot_submissions = self.reddit_con.subreddit('programming').hot(limit=limit)
 
   def __repr__(self):
     urls = []
@@ -46,6 +61,9 @@ class RedditHotProgramming(RedditSource):
     return '\n'.join(urls)
 
 if __name__ == '__main__':
-  reddit_top_programming = RedditHotProgramming()
+  #reddit_top_programming = RedditHotProgramming()
+  #reddit_top_programming.fetch(limit=10)
+  #print(reddit_top_programming)
+  reddit_top_programming = RedditHotNZG()
   reddit_top_programming.fetch(limit=10)
   print(reddit_top_programming)
