@@ -15,8 +15,8 @@ class Source(ABC):
   def fetch(self):
     pass
 
-CLIENT_ID = os.environ.get('REDDIT_CLIENT_ID')
-CLIENT_SECRET = os.environ.get('REDDIT_CLIENT_SECRET')
+CLIENT_ID = 'l3ZMi0eMfq8gb2wtbZlTAQ'                                        #needs a better solution    
+CLIENT_SECRET = 'nJdK4zHFNFA0yDR2Y6U8palQG_O_wA'
 
 class RedditSource(Source):
 
