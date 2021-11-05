@@ -15,7 +15,7 @@ class Source(ABC):
   def fetch(self):
     pass
 
-CLIENT_ID = 'l3ZMi0eMfq8gb2wtbZlTAQ'                                        #needs a better solution    
+CLIENT_ID = 'l3ZMi0eMfq8gb2wtbZlTAQ'                                        #needs a better solution    https://pypi.org/project/azure-keyvault-secrets/
 CLIENT_SECRET = 'nJdK4zHFNFA0yDR2Y6U8palQG_O_wA'
 
 class RedditSource(Source):
