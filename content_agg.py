@@ -1,4 +1,5 @@
 #https://codingkaiser.blog/2021/10/30/create-a-content-aggregator-with-python/
+#https://github.com/reddit-archive/reddit/wiki/OAuth2-Quick-Start-Example#first-steps
 
 from abc import ABC, abstractmethod
 import praw
