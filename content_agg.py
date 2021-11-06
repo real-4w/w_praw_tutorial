@@ -64,9 +64,8 @@ class RedditHotProgramming(RedditSource):
 
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
-  reddits = yaml_data['reddits']
-  
-  for reddit in reddits :
+   
+  for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
     reddit_new.fetch(5)
     print(reddit_new)
