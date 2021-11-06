@@ -73,6 +73,5 @@ if __name__ == '__main__':
       print(reddit_new.len())
       print(w_l_urls)
       print(shlex.split(w_l_urls))
-    #for tab in shlex.split(w_l_urls) : 
-    #  webbrowser.open_new(tab)
+   
     reddit_new.open_urls()
