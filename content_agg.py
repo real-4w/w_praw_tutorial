@@ -63,12 +63,12 @@ if __name__ == '__main__':
    
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
-    reddit_new.fetch(2)
-    #print(f"R/{reddit}:\n{reddit_new}")
-    print(reddit_new)
-    #webbrowser.open_new(str(reddit_new))
-    w_l = reddit_new.len()
-    print(w_l)
-    w_u = reddit_new.w_urls()
-    print(w_u)
+    reddit_new.fetch(1)
+    print(f"R/{reddit}:\n{reddit_new}")
+    print(reddit_new.len())
     
+    w_u = reddit_new.urls()
+    print(w_u)
+    print(shlex.split(w_u))
+
+    webbrowser.open_new(w_u)
