@@ -41,12 +41,13 @@ class RedditNew(RedditSource):
   def fetch(self, limit: int):
     self.w_len = limit
     self.new_submissions = self.reddit_con.subreddit(self.w_reddit).new(limit=limit)
+    #self.__repr__()
 
   def __repr__(self):
     urls = []
     for submission in self.new_submissions:
       urls.append(vars(submission)['url'])
-    self.w_urls = '\n'.join(urls)                               # Willem test
+    self.w_urls = '\n'.join(urls)                               # Willem change
     #return '\n'.join(urls)
     return self.w_urls
 
@@ -57,6 +58,10 @@ class RedditNew(RedditSource):
   def urls(self):
     return (self.w_urls)
 
+  def print_info(self):
+    print(f"R/{self.w_reddit}")
+    print(self.w_urls)
+  
   def open_urls(self):
     for tab in shlex.split(self.w_urls) : 
       webbrowser.open_new(tab)
@@ -67,7 +72,9 @@ if __name__ == '__main__':
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
     reddit_new.fetch(1)
+    
     print(f"R/{reddit}:\n{reddit_new}")
+    reddit_new.print_info()
     w_l_urls = reddit_new.urls()
     if debug == True : 
       print(reddit_new.len())
