@@ -8,7 +8,7 @@ import w_yaml as w_y
 #import os
 
 class Source(ABC):
-
+  
   @abstractmethod
   def connect(self):
     pass
@@ -17,14 +17,10 @@ class Source(ABC):
   def fetch(self):
     pass
 
-
 class RedditSource(Source):
 
   def connect(self):
-    self.reddit_con = praw.Reddit(client_id=CLIENT_ID,
-                      client_secret=CLIENT_SECRET,
-                      grant_type_access='client_credentials',
-                      user_agent='script/1.0')
+    self.reddit_con = praw.Reddit(client_id=yaml_data['client_id'], client_secret=yaml_data['client_secret'], grant_type_access='client_credentials', user_agent='script/1.0')
     return self.reddit_con
 
   def fetch(self):
@@ -51,7 +47,6 @@ class RedditNew(RedditSource):
       urls.append(vars(submission)['url'])
     return '\n'.join(urls)
 
-
 class RedditHotProgramming(RedditSource):
 #original class : can be deleted later.
   def __init__(self) -> None:
@@ -69,16 +64,14 @@ class RedditHotProgramming(RedditSource):
 
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
-  CLIENT_ID = yaml_data['client_id']
-  CLIENT_SECRET = yaml_data['client_secret']
-
+  reddits = yaml_data['reddits']
+  
+  for reddit in reddits :
+    reddit_new = RedditNew(reddit)
+    reddit_new.fetch(5)
+    print(reddit_new)
+  
   #reddit_top_programming = RedditHotProgramming()
   #reddit_top_programming.fetch(limit=10)
   #print(reddit_top_programming)
-  reddit_new_nzgw = RedditNew("nzgirlsgw")
-  reddit_new_nzgw.fetch(5)
-  print(reddit_new_nzgw)
-
-  reddit_new_xev = RedditNew("xevbellringer")
-  reddit_new_xev.fetch(5)
-  print(reddit_new_xev)
+  
