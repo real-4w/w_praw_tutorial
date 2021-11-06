@@ -4,7 +4,8 @@
 
 from abc import ABC, abstractmethod
 import praw
-import os
+import w_yaml
+#import os
 
 class Source(ABC):
 
