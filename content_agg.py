@@ -51,4 +51,4 @@ if __name__ == '__main__':
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
     reddit_new.fetch(5)
-    print(reddit_new)
+    print(f"R/{reddit}:\n{reddit_new}")
