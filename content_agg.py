@@ -59,6 +59,10 @@ class RedditNew(RedditSource):
     return (self.w_urls)
 
   def print_info(self):
+    urls = []
+    for submission in self.new_submissions:
+      urls.append(vars(submission)['url'])
+    self.w_urls = '\n'.join(urls)                               # Willem change
     print(f"R/{self.w_reddit}")
     print(self.w_urls)
   
@@ -73,7 +77,7 @@ if __name__ == '__main__':
     reddit_new = RedditNew(reddit)
     reddit_new.fetch(1)
     
-    print(f"R/{reddit}:\n{reddit_new}")
+    #print(f"R/{reddit}:\n{reddit_new}")
     reddit_new.print_info()
     w_l_urls = reddit_new.urls()
     if debug == True : 
