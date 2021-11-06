@@ -1,5 +1,6 @@
 #https://codingkaiser.blog/2021/10/30/create-a-content-aggregator-with-python/
 #https://github.com/reddit-archive/reddit/wiki/OAuth2-Quick-Start-Example#first-steps
+#https://www.geeksforgeeks.org/inheritance-in-python/
 
 from abc import ABC, abstractmethod
 import praw
@@ -31,6 +32,22 @@ class RedditSource(Source):
     pass
 
 class RedditHotNZG(RedditSource):
+
+  def __init__(self, w_name) -> None:
+    self.reddit_con = super().connect()
+    self.hot_submissions = []
+
+  def fetch(self, limit: int):
+    self.hot_submissions = self.reddit_con.subreddit('nzgirlsgw').hot(limit=limit)
+
+  def __repr__(self):
+    urls = []
+    for submission in self.hot_submissions:
+      urls.append(vars(submission)['url'])
+    return '\n'.join(urls)
+
+
+class RedditNewNZG(RedditSource):
 
   def __init__(self) -> None:
     self.reddit_con = super().connect()
@@ -64,6 +81,6 @@ if __name__ == '__main__':
   #reddit_top_programming = RedditHotProgramming()
   #reddit_top_programming.fetch(limit=10)
   #print(reddit_top_programming)
-  reddit_top_programming = RedditHotNZG()
-  reddit_top_programming.fetch(limit=10)
-  print(reddit_top_programming)
+  reddit_new_nzgw = RedditNewNZG()
+  reddit_new_nzgw.fetch(limit=10)
+  print(reddit_new_nzgw)
