@@ -31,8 +31,13 @@ class RedditSource(Source):
   def fetch(self):
     pass
 
-class RedditNew(RedditSource):
 #wip class
+class RedditNew(RedditSource):
+  """Create a class for a Reddit r/<name>
+
+  Args:
+      RedditSource (string): Should contain Reddit's r/<name>
+  """
   def __init__(self, w_reddit: str) -> None:
     self.reddit_con = super().connect()
     self.new_submissions = []
@@ -49,7 +54,7 @@ class RedditNew(RedditSource):
 
 
 class RedditHotProgramming(RedditSource):
-#original class
+#original class : can be deleted later.
   def __init__(self) -> None:
     self.reddit_con = super().connect()
     self.hot_submissions = []
@@ -68,6 +73,9 @@ if __name__ == '__main__':
   #reddit_top_programming.fetch(limit=10)
   #print(reddit_top_programming)
   reddit_new_nzgw = RedditNew("nzgirlsgw")
-  #reddit_new_nzgw.fetch(w_reddit="nzgirlsgw", limit=10)
-  reddit_new_nzgw.fetch(10)
+  reddit_new_nzgw.fetch(5)
   print(reddit_new_nzgw)
+
+  reddit_new_xev = RedditNew("xevbellringer")
+  reddit_new_xev.fetch(5)
+  print(reddit_new_xev)
