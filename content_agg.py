@@ -4,7 +4,7 @@
 
 from abc import ABC, abstractmethod
 import praw
-import w_yaml
+import w_yaml as w_y
 #import os
 
 class Source(ABC):
@@ -17,8 +17,6 @@ class Source(ABC):
   def fetch(self):
     pass
 
-CLIENT_ID = 'l3ZMi0eMfq8gb2wtbZlTAQ'                                        #needs a better solution    https://pypi.org/project/azure-keyvault-secrets/
-CLIENT_SECRET = 'nJdK4zHFNFA0yDR2Y6U8palQG_O_wA'
 
 class RedditSource(Source):
 
@@ -70,6 +68,10 @@ class RedditHotProgramming(RedditSource):
     return '\n'.join(urls)
 
 if __name__ == '__main__':
+  debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
+  CLIENT_ID = yaml_data['client_id']
+  CLIENT_SECRET = yaml_data['client_secret']
+
   #reddit_top_programming = RedditHotProgramming()
   #reddit_top_programming.fetch(limit=10)
   #print(reddit_top_programming)
