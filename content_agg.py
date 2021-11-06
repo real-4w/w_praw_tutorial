@@ -1,11 +1,9 @@
 #https://codingkaiser.blog/2021/10/30/create-a-content-aggregator-with-python/
 #https://github.com/reddit-archive/reddit/wiki/OAuth2-Quick-Start-Example#first-steps
 #https://www.geeksforgeeks.org/inheritance-in-python/
-
 from abc import ABC, abstractmethod
 import praw
 import w_yaml as w_y
-#import os
 
 class Source(ABC):
   
@@ -47,21 +45,6 @@ class RedditNew(RedditSource):
       urls.append(vars(submission)['url'])
     return '\n'.join(urls)
 
-class RedditHotProgramming(RedditSource):
-#original class : can be deleted later.
-  def __init__(self) -> None:
-    self.reddit_con = super().connect()
-    self.hot_submissions = []
-
-  def fetch(self, limit: int):
-    self.hot_submissions = self.reddit_con.subreddit('programming').hot(limit=limit)
-
-  def __repr__(self):
-    urls = []
-    for submission in self.hot_submissions:
-      urls.append(vars(submission)['url'])
-    return '\n'.join(urls)
-
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
    
@@ -69,8 +52,3 @@ if __name__ == '__main__':
     reddit_new = RedditNew(reddit)
     reddit_new.fetch(5)
     print(reddit_new)
-  
-  #reddit_top_programming = RedditHotProgramming()
-  #reddit_top_programming.fetch(limit=10)
-  #print(reddit_top_programming)
-  
