@@ -2,6 +2,7 @@
 #https://github.com/reddit-archive/reddit/wiki/OAuth2-Quick-Start-Example#first-steps
 #https://www.geeksforgeeks.org/inheritance-in-python/
 from abc import ABC, abstractmethod
+import webbrowser, shlex
 import praw
 import w_yaml as w_y
 
@@ -34,21 +35,40 @@ class RedditNew(RedditSource):
   def __init__(self, w_reddit: str) -> None:
     self.reddit_con = super().connect()
     self.new_submissions = []
-    self.w_reddit = w_reddit
+    self.w_reddit = w_reddit                                   # Willems additions
+    self.w_len = 0  
+    self.w_urls = []
     
   def fetch(self, limit: int):
+    self.w_len = limit
     self.new_submissions = self.reddit_con.subreddit(self.w_reddit).new(limit=limit)
 
   def __repr__(self):
     urls = []
     for submission in self.new_submissions:
       urls.append(vars(submission)['url'])
-    return '\n'.join(urls)
+    self.w_urls = '\n'.join(urls)                               # Willem test
+    #return '\n'.join(urls)
+    return self.w_urls
+
+  def len(self):
+    return (self.w_len)
+
+  def urls(self):
+    return (self.w_urls)
+
 
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
    
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
-    reddit_new.fetch(5)
-    print(f"R/{reddit}:\n{reddit_new}")
+    reddit_new.fetch(2)
+    #print(f"R/{reddit}:\n{reddit_new}")
+    print(reddit_new)
+    #webbrowser.open_new(str(reddit_new))
+    w_l = reddit_new.len()
+    print(w_l)
+    w_u = reddit_new.w_urls()
+    print(w_u)
+    
