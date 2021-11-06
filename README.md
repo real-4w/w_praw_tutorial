@@ -7,7 +7,7 @@ Requirements:
 
 2) Make sure you have a reddit.yaml file like this
     ---
-    debug : False                                                     
+    debug : True | False                                                     
     client_id : "<your Reddit client_id>"
     client_secret :  "<your Reddit client_secret>"
     reddits:
