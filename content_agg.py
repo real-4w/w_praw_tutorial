@@ -2,8 +2,7 @@
 #https://github.com/reddit-archive/reddit/wiki/OAuth2-Quick-Start-Example#first-steps
 #https://www.geeksforgeeks.org/inheritance-in-python/
 from abc import ABC, abstractmethod
-import webbrowser, shlex
-import praw
+import webbrowser, shlex, praw
 import w_yaml as w_y
 
 class Source(ABC):
@@ -51,24 +50,29 @@ class RedditNew(RedditSource):
     #return '\n'.join(urls)
     return self.w_urls
 
+  # my additions to the class are below:
   def len(self):
     return (self.w_len)
 
   def urls(self):
     return (self.w_urls)
 
+  def open_urls(self):
+    for tab in shlex.split(self.w_urls) : 
+      webbrowser.open_new(tab)
 
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
    
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
-    reddit_new.fetch(2)
+    reddit_new.fetch(1)
     print(f"R/{reddit}:\n{reddit_new}")
-    print(reddit_new.len())
     w_l_urls = reddit_new.urls()
     if debug == True : 
+      print(reddit_new.len())
       print(w_l_urls)
       print(shlex.split(w_l_urls))
-    for tab in shlex.split(w_l_urls) : 
-      webbrowser.open_new(tab)
+    #for tab in shlex.split(w_l_urls) : 
+    #  webbrowser.open_new(tab)
+    reddit_new.open_urls()
