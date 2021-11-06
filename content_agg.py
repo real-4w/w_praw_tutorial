@@ -32,8 +32,8 @@ class RedditSource(Source):
     pass
 
 class RedditHotNZG(RedditSource):
-
-  def __init__(self, w_name) -> None:
+#willems tweak can be deleted later
+  def __init__(self) -> None:
     self.reddit_con = super().connect()
     self.hot_submissions = []
 
@@ -46,24 +46,24 @@ class RedditHotNZG(RedditSource):
       urls.append(vars(submission)['url'])
     return '\n'.join(urls)
 
-
-class RedditNewNZG(RedditSource):
+class RedditNew(RedditSource):
 
   def __init__(self) -> None:
     self.reddit_con = super().connect()
-    self.hot_submissions = []
+    self.new_submissions = []
 
-  def fetch(self, limit: int):
-    self.hot_submissions = self.reddit_con.subreddit('nzgirlsgw').new(limit=limit)
+  def fetch(self, w_reddit: str, limit: int):
+    self.new_submissions = self.reddit_con.subreddit(w_reddit).new(limit=limit)
 
   def __repr__(self):
     urls = []
-    for submission in self.hot_submissions:
+    for submission in self.new_submissions:
       urls.append(vars(submission)['url'])
     return '\n'.join(urls)
 
-class RedditHotProgramming(RedditSource):
 
+class RedditHotProgramming(RedditSource):
+#original class
   def __init__(self) -> None:
     self.reddit_con = super().connect()
     self.hot_submissions = []
@@ -81,6 +81,7 @@ if __name__ == '__main__':
   #reddit_top_programming = RedditHotProgramming()
   #reddit_top_programming.fetch(limit=10)
   #print(reddit_top_programming)
-  reddit_new_nzgw = RedditNewNZG()
-  reddit_new_nzgw.fetch(limit=10)
+  reddit_new_nzgw = RedditNew()
+  #reddit_new_nzgw.fetch(w_reddit="nzgirlsgw", limit=10)
+  reddit_new_nzgw.fetch("nzgirlsgw", 10)
   print(reddit_new_nzgw)
