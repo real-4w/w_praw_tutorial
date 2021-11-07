@@ -37,22 +37,20 @@ class RedditNew(RedditSource):
     self.new_submissions = []
     self.w_reddit = w_reddit                                                              # Willems additions
     self.w_len = 0  
-    self.w_urls = []
-    self.w_titles = []
-    self.w_reddit_df = pd.DataFrame(columns=['Title', 'URL'])                             # pref way? WIP
+    self.w_reddit_df = pd.DataFrame(columns=['title', 'url'])                             # pref way? WIP
 
   def fetch(self, limit: int):
     self.w_len = limit
     self.new_submissions = self.reddit_con.subreddit(self.w_reddit).new(limit=limit)
     
-    titles = []
-    urls = []                                                   # Was originally part of th __rep__(self) function
+    #titles = []
+    #urls = []                                                   # Was originally part of th __rep__(self) function
     for submission in self.new_submissions:                     #Moved forward to avoid errors 
-      titles.append(vars(submission)['title'])
-      urls.append(vars(submission)['url'])
+      #titles.append(vars(submission)['title'])
+      #urls.append(vars(submission)['url'])
       self.w_reddit_df.loc[len(self.w_reddit_df.index)] = [vars(submission)['title'], vars(submission)['url']]
-    self.w_urls = '\n'.join(urls)  
-    self.w_titles = '\n'.join(titles)  
+    #self.w_urls = '\n'.join(urls)  
+    #self.w_titles = '\n'.join(titles)  
         
   def __repr__(self):
     return self.w_urls
@@ -62,14 +60,16 @@ class RedditNew(RedditSource):
     return (self.w_len)
 
   def urls(self):
-    return (self.w_urls)
+    #return (self.w_urls)
+    return (self.w_reddit_df['url'])
 
   def print_info(self):
-    print(f"R/{self.w_reddit}: {self.w_len}")
+    print(f"\nR/{self.w_reddit}: {self.w_len}")
     print(self.w_reddit_df)
       
   def open_urls(self):
-    for tab in shlex.split(self.w_urls) : 
+    for tab in self.w_reddit_df['url'] : 
+    #for tab in shlex.split(self.w_urls) : 
       webbrowser.open_new(tab)
 
 if __name__ == '__main__':
@@ -77,7 +77,6 @@ if __name__ == '__main__':
    
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
-    #reddit_new.print_info()
     reddit_new.fetch(2)
     reddit_new.print_info()
     reddit_new.open_urls()
