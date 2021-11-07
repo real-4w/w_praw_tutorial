@@ -35,13 +35,11 @@ class RedditNew(RedditSource):
   def __init__(self, w_reddit: str) -> None:
     self.reddit_con = super().connect()
     self.new_submissions = []
-    self.w_reddit = w_reddit                                   # Willems additions
+    self.w_reddit = w_reddit                                                              # Willems additions
     self.w_len = 0  
     self.w_urls = []
     self.w_titles = []
-    
-    self.df_cols = ['Title', 'URL']
-    self.w_reddit_df = pd.DataFrame(columns=self.df_cols)                             # pref way? WIP
+    self.w_reddit_df = pd.DataFrame(columns=['Title', 'URL'])                             # pref way? WIP
 
   def fetch(self, limit: int):
     self.w_len = limit
@@ -52,12 +50,10 @@ class RedditNew(RedditSource):
     for submission in self.new_submissions:                     #Moved forward to avoid errors 
       titles.append(vars(submission)['title'])
       urls.append(vars(submission)['url'])
-      #print(vars(submission)['title'])
+      self.w_reddit_df.loc[len(self.w_reddit_df.index)] = [vars(submission)['title'], vars(submission)['url']]
     self.w_urls = '\n'.join(urls)  
     self.w_titles = '\n'.join(titles)  
-
-    #print(self.w_urls)
-
+        
   def __repr__(self):
     return self.w_urls
 
@@ -70,13 +66,7 @@ class RedditNew(RedditSource):
 
   def print_info(self):
     print(f"R/{self.w_reddit}: {self.w_len}")
-    #for (title, url) in zip(shlex.split(self.w_titles), shlex.split(self.w_urls)):
-    #for (title, url) in zip(self.w_titles, self.w_urls):
-    #  print (title, url)
-    #zipped = (zip(self.w_titles, self.w_urls))
-    
-    print(self.w_urls)
-    print(self.w_titles)
+    print(self.w_reddit_df)
       
   def open_urls(self):
     for tab in shlex.split(self.w_urls) : 
@@ -89,6 +79,6 @@ if __name__ == '__main__':
     reddit_new = RedditNew(reddit)
     #reddit_new.print_info()
     reddit_new.fetch(2)
-    #reddit_new.print_info()
+    reddit_new.print_info()
     reddit_new.open_urls()
 
