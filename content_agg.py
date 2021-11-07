@@ -22,10 +22,19 @@ class RedditSource(Source):
   def fetch(self):
     pass
 
+class RSSSource(Source):
+  def connect(self):
+      pass
+  def fetch(self):
+      pass
 
+class RSSNew(RSSSource):
 
+  def __init__(self) -> None:
+    self.w_len = 0
+    self.w_reddit_df = pd.DataFrame(columns=['date', 'title', 'url'])                      # Use dataframe for simplicity/
 
-#wip class
+#wip Reddit Class
 class RedditNew(RedditSource):
   """Create a class for getting a Reddit r/<name>.
 
