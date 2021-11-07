@@ -42,13 +42,12 @@ class RedditNew(RedditSource):
     self.w_len = limit
     self.new_submissions = self.reddit_con.subreddit(self.w_reddit).new(limit=limit)
     
-
-  def __repr__(self):
-    urls = []
-    for submission in self.new_submissions:
+    urls = []                                                   # Was originally part of th __rep__(self) function
+    for submission in self.new_submissions:                     #Moved forward to avoid errors 
       urls.append(vars(submission)['url'])
-    self.w_urls = '\n'.join(urls)                               # Willem change
-    #return '\n'.join(urls)
+    self.w_urls = '\n'.join(urls)  
+    
+  def __repr__(self):
     return self.w_urls
 
   # my additions to the class are below:
@@ -59,11 +58,7 @@ class RedditNew(RedditSource):
     return (self.w_urls)
 
   def print_info(self):
-    #urls = []
-    #for submission in self.new_submissions:
-    #  urls.append(vars(submission)['url'])
-    #self.w_urls = '\n'.join(urls)                               # Willem change
-    print(f"R/{self.w_reddit}")
+    print(f"R/{self.w_reddit}: {self.w_len}")
     print(self.w_urls)
   
   def open_urls(self):
@@ -75,15 +70,7 @@ if __name__ == '__main__':
    
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
-    reddit_new.fetch(3)
-    
-    print(f"R/{reddit}:\n{reddit_new}")
     reddit_new.print_info()
+    reddit_new.fetch(2)
     reddit_new.print_info()
-    w_l_urls = reddit_new.urls()
-    if debug == True : 
-      print(reddit_new.len())
-      print(w_l_urls)
-      print(shlex.split(w_l_urls))
-   
     reddit_new.open_urls()
