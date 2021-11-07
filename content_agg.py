@@ -48,7 +48,9 @@ class RedditNew(RedditSource):
       self.w_reddit_df.loc[len(self.w_reddit_df.index)] = [vars(submission)['title'], vars(submission)['url']]
         
   def __repr__(self):
-    return self.w_urls
+    """Returns a string summary self.print() is called.
+    """
+    return(f"\nR/{self.w_reddit}: {self.w_len}")
 
   # my additions to the class are below:
   def len(self):
