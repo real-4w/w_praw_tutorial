@@ -6,8 +6,12 @@ NewsFeed = feedparser.parse("http://rss.nzherald.co.nz/rss/xml/nzhrsscid_0000000
 
 entry = NewsFeed.entries[1]
 
+print(len(NewsFeed['entries']))
+
+#print(len(entry))
+
 print (entry.published)
 print ("******")
-print (entry.summary)
+print (entry.title)
 print ("------News Link--------")
 print (entry.link)

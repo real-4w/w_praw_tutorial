@@ -17,6 +17,8 @@ Requirements:
 
 Complete: https://codingkaiser.blog/2021/10/30/create-a-content-aggregator-with-python/
 
-WIP: https://praw.readthedocs.io/en/stable/tutorials/comments.html
+WIP: RSS parser
+
+https://praw.readthedocs.io/en/stable/tutorials/comments.html
 https://pypi.org/project/praw/
 

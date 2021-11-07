@@ -1,3 +1,5 @@
+# TEST TEST TESTING ONLY
+
 from abc import ABC, abstractmethod
 import webbrowser, praw
 import pandas as pd
@@ -24,7 +26,7 @@ class RedditSource(Source):
 
 #wip class
 class RedditNew(RedditSource):
-  """Create a class for getting a Reddit r/<name>.
+  """Create a class for a Reddit r/<name>.
 
   Args:
       RedditSource (string): Should contain Reddit's r/<name>
