@@ -22,6 +22,9 @@ class RedditSource(Source):
   def fetch(self):
     pass
 
+
+
+
 #wip class
 class RedditNew(RedditSource):
   """Create a class for getting a Reddit r/<name>.
