@@ -10,9 +10,10 @@ Requirements:
     debug : True | False                                                     
     client_id : "<your Reddit client_id>"
     client_secret :  "<your Reddit client_secret>"
+    number : <number of reddit threads to fetch>
     reddits:
-    - reddit1
-    - reddit2
+    - alexa 
+    - gadgets
 
 Complete: https://codingkaiser.blog/2021/10/30/create-a-content-aggregator-with-python/
 
