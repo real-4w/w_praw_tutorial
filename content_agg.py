@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import webbrowser, praw
+import webbrowser, praw, feedparser
 import pandas as pd
 import w_yaml as w_y
 
@@ -14,7 +14,6 @@ class Source(ABC):
     pass
 
 class RedditSource(Source):
-
   def connect(self):
     self.reddit_con = praw.Reddit(client_id=yaml_data['client_id'], client_secret=yaml_data['client_secret'], grant_type_access='client_credentials', user_agent='script/1.0')
     return self.reddit_con
@@ -31,8 +30,24 @@ class RSSSource(Source):
 class RSSNew(RSSSource):
 
   def __init__(self) -> None:
+    self.w_rss = "http://rss.nzherald.co.nz/rss/xml/nzhrsscid_000000002.xml"
     self.w_len = 0
-    self.w_reddit_df = pd.DataFrame(columns=['date', 'title', 'url'])                      # Use dataframe for simplicity/
+    self.w_rss_df = pd.DataFrame(columns=['date', 'title', 'url'])                      # Use dataframe for simplicity/
+
+  def fetch(self, limit: int):
+    self.w_len = limit
+    NewsFeed = feedparser.parse(self.w_rss)
+    entry = NewsFeed.entries[1]
+    print (entry.published)
+    print ("******")
+    print (entry.title)
+    print ("------News Link--------")
+    print (entry.link)
+
+  def __repr__(self):
+    """Returns a string summary self.print() is called.
+    """
+    return(f"\nRSS: {self.w_rss}: {self.w_len}")
 
 #wip Reddit Class
 class RedditNew(RedditSource):
@@ -87,3 +102,7 @@ if __name__ == '__main__':
     reddit_new.fetch(int(yaml_data['number']))
     reddit_new.print_info()
     reddit_new.open_urls()
+  
+  rss_new = RSSNew()
+  rss_new.fetch(int(yaml_data['number']))
+  print(rss_new)
