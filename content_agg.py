@@ -44,11 +44,11 @@ class RedditNew(RedditSource):
     self.new_submissions = self.reddit_con.subreddit(self.w_reddit).new(limit=limit)
     for submission in self.new_submissions:                                               # Moved forward from __repr__ to avoid errors 
       self.w_reddit_df.loc[len(self.w_reddit_df.index)] = [vars(submission)['title'], vars(submission)['url']]
-        
+  
   def __repr__(self):
     """Returns a string summary print(RedditNew) is called.
     """
-    return(f"\n{self.w_reddit}: {self.w_len}")
+    return(f"{self.w_reddit}: {self.w_len}")
 
   def len(self):
     return (self.w_len)
@@ -64,6 +64,9 @@ class RedditNew(RedditSource):
     for tab in self.w_reddit_df['url'] : 
       webbrowser.open_new(tab)
 
+  def return_df(self):
+    return (self.w_reddit_df)
+  
   def write_pickle(self):
     self.w_reddit_df.to_pickle(f"{self.w_reddit}.pkl")
 
@@ -90,9 +93,9 @@ class RSSNew(RSSSource):
         i += 1
  
   def __repr__(self):
-    """Returns a string summary self.print() is called.
+    """Returns a string summary print(RSSNew) is called.
     """
-    return(f"\nRSS: {self.w_rss}: {self.w_len}")
+    return(f"RSS: {self.w_rss}: {self.w_len}")
 
   def len(self):
     return (self.w_len)
@@ -108,22 +111,48 @@ class RSSNew(RSSSource):
     for tab in self.w_rss_df['url'] : 
       webbrowser.open_new(tab)
 
+  def return_df(self):
+    return (self.w_rss_df)
+  
   def write_pickle(self):
     self.w_rss_df.to_pickle("rss.pkl")
 
+class w_ContentAggregator(ABC):
+  def __init__(self) -> None:
+    super().__init__()
+    self.w_content_df = pd.DataFrame(columns=['title', 'url'])   
+
+  def __repr__(self):
+    """Returns a string summary print(RedditNew) is called.
+    """
+    return(f"w_ContentAggregator:\n {self.w_content_df}")
+
+  def add_content_df(self, w_df_add: pd.DataFrame):
+    self.w_content_df = self.w_content_df.append(w_df_add, ignore_index = True)
+  
+  def write_pickle(self):
+    self.w_content_df.to_pickle("content.pkl")
+
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
-   
+  w_all_content = w_ContentAggregator() 
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
     reddit_new.fetch(int(yaml_data['number']))
     reddit_new.print_info()
     reddit_new.open_urls()
+    #print(reddit_new)
     #reddit_new.write_pickle()
-  
-  for rss in yaml_data['rss'] :
-    rss_new = RSSNew(rss)
-    rss_new.fetch(int(yaml_data['number']))
-    rss_new.print_info()
-    rss_new.open_urls()
+    w_all_content.add_content_df(reddit_new.return_df())
+  print(w_all_content)
+  #w_all_content.write_pickle()
+  #for rss in yaml_data['rss'] :
+    #rss_new = RSSNew(rss)
+    #rss_new.fetch(int(yaml_data['number']))
+    #rss_new.print_info()
+    #rss_new.open_urls()
     #rss_new.write_pickle()
+
+
+
+    
