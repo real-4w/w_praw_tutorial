@@ -114,8 +114,9 @@ if __name__ == '__main__':
     reddit_new.print_info()
     reddit_new.open_urls()
   
-  rss_new = RSSNew('http://rss.nzherald.co.nz/rss/xml/nzhrsscid_000000002.xml')
-  rss_new.fetch(int(yaml_data['number']))
-  rss_new.print_info()
-  rss_new.open_urls()
+  for rss in yaml_data['rss'] :
+    rss_new = RSSNew(rss)
+    rss_new.fetch(int(yaml_data['number']))
+    rss_new.print_info()
+    rss_new.open_urls()
   
