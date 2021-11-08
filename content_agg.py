@@ -66,9 +66,12 @@ class RedditNew(RedditSource):
 
   def return_df(self):
     return (self.w_reddit_df)
-  
-  def write_pickle(self):
-    self.w_reddit_df.to_pickle(f"{self.w_reddit}.pkl")
+ 
+  def read_pickle(self, pickle: str):
+    self.w_content_df = pd.read_pickle(pickle)
+
+  def write_pickle(self, pickle: str):
+    self.w_content_df.to_pickle(pickle)
 
 class RSSSource(Source):
   def connect(self):
@@ -114,8 +117,11 @@ class RSSNew(RSSSource):
   def return_df(self):
     return (self.w_rss_df)
   
-  def write_pickle(self):
-    self.w_rss_df.to_pickle("rss.pkl")
+  def read_pickle(self, pickle: str):
+    self.w_content_df = pd.read_pickle(pickle)
+
+  def write_pickle(self, pickle: str):
+    self.w_content_df.to_pickle(pickle)
 
 class w_ContentAggregator(ABC):
   def __init__(self) -> None:
@@ -139,16 +145,17 @@ class w_ContentAggregator(ABC):
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
   w_all_content = w_ContentAggregator() 
-  w_all_content.read_pickle("content.pkl")
+  #w_all_content.read_pickle("content.pkl")
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
     reddit_new.fetch(int(yaml_data['number']))
     reddit_new.print_info()
     reddit_new.open_urls()
-    #reddit_new.write_pickle()
+    #reddit_new.write_pickle(f"{reddit}.pkl")
     w_all_content.add_content_df(reddit_new.return_df())
   print(w_all_content)
-  #w_all_content.write_pickle()
+  
+  #w_all_content.write_pickle("content.pkl")
   #for rss in yaml_data['rss'] :
     #rss_new = RSSNew(rss)
     #rss_new.fetch(int(yaml_data['number']))
