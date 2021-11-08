@@ -127,21 +127,24 @@ class w_ContentAggregator(ABC):
     """
     return(f"w_ContentAggregator:\n {self.w_content_df}")
 
+  def read_pickle(self, pickle: str):
+    self.w_content_df = pd.read_pickle(pickle)
+  
   def add_content_df(self, w_df_add: pd.DataFrame):
     self.w_content_df = self.w_content_df.append(w_df_add, ignore_index = True)
   
-  def write_pickle(self):
-    self.w_content_df.to_pickle("content.pkl")
+  def write_pickle(self, pickle: str):
+    self.w_content_df.to_pickle(pickle)
 
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
   w_all_content = w_ContentAggregator() 
+  w_all_content.read_pickle("content.pkl")
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit)
     reddit_new.fetch(int(yaml_data['number']))
     reddit_new.print_info()
     reddit_new.open_urls()
-    #print(reddit_new)
     #reddit_new.write_pickle()
     w_all_content.add_content_df(reddit_new.return_df())
   print(w_all_content)
