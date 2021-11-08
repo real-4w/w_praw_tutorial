@@ -21,47 +21,6 @@ class RedditSource(Source):
   def fetch(self):
     pass
 
-class RSSSource(Source):
-  def connect(self):
-      pass
-  def fetch(self):
-      pass
-
-class RSSNew(RSSSource):
-
-  def __init__(self, w_rss: str) -> None:
-    self.w_rss = w_rss
-    self.w_len = 0
-    self.w_rss_df = pd.DataFrame(columns=['date', 'title', 'url'])                      # Use dataframe for simplicity/
-
-  def fetch(self, limit: int):
-    self.w_len = limit
-    i = 0
-    NewsFeed = feedparser.parse(self.w_rss)
-    for entry in NewsFeed['entries']:                                                   # gives xx rss entries as are on the page
-      if i < self.w_len :
-        self.w_rss_df.loc[len(self.w_rss_df.index)] = [entry.published, entry.title, entry.link]
-        i += 1
- 
-  def __repr__(self):
-    """Returns a string summary self.print() is called.
-    """
-    return(f"\nRSS: {self.w_rss}: {self.w_len}")
-
-  def len(self):
-    return (self.w_len)
-
-  def urls(self):
-    return (self.w_rss_df['url'])
-
-  def print_info(self):
-    print(f"\nR/{self.w_rss}: {self.w_len}")
-    print(self.w_rss_df)
-
-  def open_urls(self):
-    for tab in self.w_rss_df['url'] : 
-      webbrowser.open_new(tab)
-
 class RedditNew(RedditSource):
   """Create a class for getting a Reddit r/<name>.
 
@@ -105,6 +64,47 @@ class RedditNew(RedditSource):
     for tab in self.w_reddit_df['url'] : 
       webbrowser.open_new(tab)
 
+class RSSSource(Source):
+  def connect(self):
+      pass
+  def fetch(self):
+      pass
+
+class RSSNew(RSSSource):
+
+  def __init__(self, w_rss: str) -> None:
+    self.w_rss = w_rss
+    self.w_len = 0
+    self.w_rss_df = pd.DataFrame(columns=['date', 'title', 'url'])                      # Use dataframe for simplicity/
+
+  def fetch(self, limit: int):
+    self.w_len = limit
+    i = 0
+    NewsFeed = feedparser.parse(self.w_rss)
+    for entry in NewsFeed['entries']:                                                   # gives xx rss entries as are on the page
+      if i < self.w_len :
+        self.w_rss_df.loc[len(self.w_rss_df.index)] = [entry.published, entry.title, entry.link]
+        i += 1
+ 
+  def __repr__(self):
+    """Returns a string summary self.print() is called.
+    """
+    return(f"\nRSS: {self.w_rss}: {self.w_len}")
+
+  def len(self):
+    return (self.w_len)
+
+  def urls(self):
+    return (self.w_rss_df['url'])
+
+  def print_info(self):
+    print(f"\nR/{self.w_rss}: {self.w_len}")
+    print(self.w_rss_df)
+
+  def open_urls(self):
+    for tab in self.w_rss_df['url'] : 
+      webbrowser.open_new(tab)
+
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
    
@@ -119,4 +119,3 @@ if __name__ == '__main__':
     rss_new.fetch(int(yaml_data['number']))
     rss_new.print_info()
     rss_new.open_urls()
-  
