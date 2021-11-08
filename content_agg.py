@@ -64,6 +64,9 @@ class RedditNew(RedditSource):
     for tab in self.w_reddit_df['url'] : 
       webbrowser.open_new(tab)
 
+  def write_pickle(self):
+    self.w_reddit_df.to_pickle(f"{self.w_reddit}.pkl")
+
 class RSSSource(Source):
   def connect(self):
       pass
@@ -113,9 +116,10 @@ if __name__ == '__main__':
     reddit_new.fetch(int(yaml_data['number']))
     reddit_new.print_info()
     reddit_new.open_urls()
+    reddit_new.write_pickle()
   
-  for rss in yaml_data['rss'] :
-    rss_new = RSSNew(rss)
-    rss_new.fetch(int(yaml_data['number']))
-    rss_new.print_info()
-    rss_new.open_urls()
+  #for rss in yaml_data['rss'] :
+  #  rss_new = RSSNew(rss)
+  #  rss_new.fetch(int(yaml_data['number']))
+  #  rss_new.print_info()
+  #  rss_new.open_urls()
