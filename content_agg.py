@@ -89,7 +89,7 @@ class RedditNew(RedditSource):
   def __repr__(self):
     """Returns a string summary print(RedditNew) is called.
     """
-    return(f"\nR/{self.w_reddit}: {self.w_len}")
+    return(f"\n{self.w_reddit}: {self.w_len}")
 
   def len(self):
     return (self.w_len)
