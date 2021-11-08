@@ -36,23 +36,32 @@ class RSSNew(RSSSource):
 
   def fetch(self, limit: int):
     self.w_len = limit
+    i = 0
     NewsFeed = feedparser.parse(self.w_rss)
-    #del News
-    for entry in NewsFeed['entries']:
-      print(f"Date: {entry.published}, Title {entry.title}, Link: {entry.link}")
-    #entry = NewsFeed.entries[1]
-    #print (entry.published)
-    #print ("******")
-    #print (entry.title)
-    #print ("------News Link--------")
-    #print (entry.link)
-
+    for entry in NewsFeed['entries']:                                                   # gives xx rss entries as are on the page
+      if i < self.w_len :
+        self.w_rss_df.loc[len(self.w_rss_df.index)] = [entry.published, entry.title, entry.link]
+        i += 1
+ 
   def __repr__(self):
     """Returns a string summary self.print() is called.
     """
     return(f"\nRSS: {self.w_rss}: {self.w_len}")
 
-#wip Reddit Class
+  def len(self):
+    return (self.w_len)
+
+  def urls(self):
+    return (self.w_rss_df['url'])
+
+  def print_info(self):
+    print(f"\nR/{self.w_rss}: {self.w_len}")
+    print(self.w_rss_df)
+
+  def open_urls(self):
+    for tab in self.w_rss_df['url'] : 
+      webbrowser.open_new(tab)
+
 class RedditNew(RedditSource):
   """Create a class for getting a Reddit r/<name>.
 
@@ -82,7 +91,6 @@ class RedditNew(RedditSource):
     """
     return(f"\nR/{self.w_reddit}: {self.w_len}")
 
-  # my additions to the class are below:
   def len(self):
     return (self.w_len)
 
@@ -108,4 +116,6 @@ if __name__ == '__main__':
   
   rss_new = RSSNew('http://rss.nzherald.co.nz/rss/xml/nzhrsscid_000000002.xml')
   rss_new.fetch(int(yaml_data['number']))
+  rss_new.print_info()
+  rss_new.open_urls()
   
