@@ -111,6 +111,9 @@ class RSSNew(RSSSource):
     for tab in self.w_rss_df['url'] : 
       webbrowser.open_new(tab)
 
+  def return_df(self):
+    return (self.w_rss_df)
+  
   def write_pickle(self):
     self.w_rss_df.to_pickle("rss.pkl")
 
@@ -126,7 +129,9 @@ class w_ContentAggregator(ABC):
 
   def add_content_df(self, w_df_add: pd.DataFrame):
     self.w_content_df = self.w_content_df.append(w_df_add, ignore_index = True)
-    #pass
+  
+  def write_pickle(self):
+    self.w_content_df.to_pickle("content.pkl")
 
 if __name__ == '__main__':
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
@@ -140,6 +145,7 @@ if __name__ == '__main__':
     #reddit_new.write_pickle()
     w_all_content.add_content_df(reddit_new.return_df())
   print(w_all_content)
+  #w_all_content.write_pickle()
   #for rss in yaml_data['rss'] :
     #rss_new = RSSNew(rss)
     #rss_new.fetch(int(yaml_data['number']))

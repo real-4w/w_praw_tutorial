@@ -8,7 +8,7 @@ def hello():
 
 @app.route("/links")
 def show_tables():
-    data = pd.read_pickle('reddit.pkl')
+    data = pd.read_pickle('content.pkl')
     return render_template('view.html',tables=[data.to_html(classes='Links')], titles = ['na', 'Links'])
     
 if __name__ == "__main__":
