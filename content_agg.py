@@ -29,20 +29,23 @@ class RSSSource(Source):
 
 class RSSNew(RSSSource):
 
-  def __init__(self) -> None:
-    self.w_rss = "http://rss.nzherald.co.nz/rss/xml/nzhrsscid_000000002.xml"
+  def __init__(self, w_rss: str) -> None:
+    self.w_rss = w_rss
     self.w_len = 0
     self.w_rss_df = pd.DataFrame(columns=['date', 'title', 'url'])                      # Use dataframe for simplicity/
 
   def fetch(self, limit: int):
     self.w_len = limit
     NewsFeed = feedparser.parse(self.w_rss)
-    entry = NewsFeed.entries[1]
-    print (entry.published)
-    print ("******")
-    print (entry.title)
-    print ("------News Link--------")
-    print (entry.link)
+    #del News
+    for entry in NewsFeed['entries']:
+      print(f"Date: {entry.published}, Title {entry.title}, Link: {entry.link}")
+    #entry = NewsFeed.entries[1]
+    #print (entry.published)
+    #print ("******")
+    #print (entry.title)
+    #print ("------News Link--------")
+    #print (entry.link)
 
   def __repr__(self):
     """Returns a string summary self.print() is called.
@@ -75,7 +78,7 @@ class RedditNew(RedditSource):
       self.w_reddit_df.loc[len(self.w_reddit_df.index)] = [vars(submission)['title'], vars(submission)['url']]
         
   def __repr__(self):
-    """Returns a string summary self.print() is called.
+    """Returns a string summary print(RedditNew) is called.
     """
     return(f"\nR/{self.w_reddit}: {self.w_len}")
 
@@ -103,6 +106,6 @@ if __name__ == '__main__':
     reddit_new.print_info()
     reddit_new.open_urls()
   
-  rss_new = RSSNew()
+  rss_new = RSSNew('http://rss.nzherald.co.nz/rss/xml/nzhrsscid_000000002.xml')
   rss_new.fetch(int(yaml_data['number']))
-  print(rss_new)
+  
