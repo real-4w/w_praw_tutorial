@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-import webbrowser, praw, feedparser
+from re import sub
+import webbrowser, praw, feedparser, datetime
 import pandas as pd
 import w_yaml as w_y
 
@@ -32,7 +33,7 @@ class RedditNew(RedditSource):
     self.new_submissions = []
     self.w_reddit = w_reddit                                                              
     self.w_len = 0  
-    self.w_reddit_df = pd.DataFrame(columns=['title', 'url'])                             # Use dataframe for simplicity/
+    self.w_reddit_df = pd.DataFrame(columns=['date', 'title', 'url'])                             # Use dataframe for simplicity/
 
   def fetch(self, limit: int):
     """Function to get <limit> reddit articles from the Reddit r/<w_reddit> as per class. Function will update values in the instance of the RedditNew Class.
@@ -43,7 +44,7 @@ class RedditNew(RedditSource):
     self.w_len = limit
     self.new_submissions = self.reddit_con.subreddit(self.w_reddit).new(limit=limit)
     for submission in self.new_submissions:                                               # Moved forward from __repr__ to avoid errors 
-      self.w_reddit_df.loc[len(self.w_reddit_df.index)] = [vars(submission)['title'], vars(submission)['url']]
+      self.w_reddit_df.loc[len(self.w_reddit_df.index)] = [datetime.datetime.fromtimestamp(vars(submission)['created']), vars(submission)['title'], vars(submission)['url']]
   
   def __repr__(self):
     """Returns a string summary print(RedditNew) is called.
@@ -126,7 +127,7 @@ class RSSNew(RSSSource):
 class w_ContentAggregator(ABC):
   def __init__(self) -> None:
     super().__init__()
-    self.w_content_df = pd.DataFrame(columns=['title', 'url'])   
+    self.w_content_df = pd.DataFrame(columns=['date', 'title', 'url'])   
 
   def __repr__(self):
     """Returns a string summary print(RedditNew) is called.
