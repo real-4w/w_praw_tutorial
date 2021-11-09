@@ -11,7 +11,7 @@ def trigger():
     debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
     count += 1
     sched.print_jobs()
-    #print(f"Refreshed: {count}")
+    if debug == True : print(f"Refreshed: {count}")
     for reddit in yaml_data['reddits'] :
         reddit_new = c_a.RedditNew(reddit, yaml_data['client_id'], yaml_data['client_secret'])
         reddit_new.fetch(int(yaml_data['number']))
@@ -27,7 +27,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     trigger()
-    return "Content refresh scheduler is now running!"
+    return "Content refresh scheduler is now running!" 
 
 if __name__ == "__main__":
     app.run('0.0.0.0',port=5000)
