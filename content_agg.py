@@ -33,7 +33,7 @@ class RedditNew(RedditSource):
     self.new_submissions = []
     self.w_reddit = w_reddit                                                              
     self.w_len = 0  
-    self.w_reddit_df = pd.DataFrame(columns=['date', 'title', 'url'])                             # Use dataframe for simplicity/
+    self.w_reddit_df = pd.DataFrame(columns=['date', 'title', 'url'])                          
 
   def fetch(self, limit: int):
     """Function to get <limit> reddit articles from the Reddit r/<w_reddit> as per class. Function will update values in the instance of the RedditNew Class.
@@ -43,7 +43,7 @@ class RedditNew(RedditSource):
     """
     self.w_len = limit
     self.new_submissions = self.reddit_con.subreddit(self.w_reddit).new(limit=limit)
-    for submission in self.new_submissions:                                               # Moved forward from __repr__ to avoid errors 
+    for submission in self.new_submissions:                                              
       self.w_reddit_df.loc[len(self.w_reddit_df.index)] = [datetime.datetime.fromtimestamp(vars(submission)['created']), vars(submission)['title'], vars(submission)['url']]
   
   def __repr__(self):
@@ -69,10 +69,10 @@ class RedditNew(RedditSource):
     return (self.w_reddit_df)
  
   def read_pickle(self, pickle: str):
-    self.w_content_df = pd.read_pickle(pickle)
+    self.w_reddit_df = pd.read_pickle(pickle)
 
   def write_pickle(self, pickle: str):
-    self.w_content_df.to_pickle(pickle)
+    self.w_reddit_df.to_pickle(pickle)
 
 class RSSSource(Source):
   def connect(self):
@@ -153,9 +153,8 @@ if __name__ == '__main__':
     reddit_new.print_info()
     reddit_new.open_urls()
     #reddit_new.write_pickle(f"{reddit}.pkl")
-    w_all_content.add_content_df(reddit_new.return_df())
-  print(w_all_content)
-  
+    #w_all_content.add_content_df(reddit_new.return_df())
+  #print(w_all_content)
   #w_all_content.write_pickle("content.pkl")
   #for rss in yaml_data['rss'] :
     #rss_new = RSSNew(rss)
@@ -164,6 +163,3 @@ if __name__ == '__main__':
     #rss_new.open_urls()
     #rss_new.write_pickle()
 
-
-
-    
