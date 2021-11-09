@@ -16,6 +16,7 @@ class Source(ABC):
     pass
 
 class RedditSource(Source):
+  #dirty access to yaml_data for 'client_id' and 'client_secret'
   def connect(self):
     self.reddit_con = praw.Reddit(client_id=yaml_data['client_id'], client_secret=yaml_data['client_secret'], grant_type_access='client_credentials', user_agent='script/1.0')
     return self.reddit_con
@@ -86,7 +87,7 @@ class RSSNew(RSSSource):
   def __init__(self, w_rss: str) -> None:
     self.w_rss = w_rss
     self.w_len = 0
-    self.w_rss_df = pd.DataFrame(columns=['date', 'title', 'url'])                      # Use dataframe for simplicity/
+    self.w_rss_df = pd.DataFrame(columns=['date', 'title', 'url'])                      
 
   def fetch(self, limit: int):
     self.w_len = limit
@@ -145,7 +146,6 @@ class w_ContentAggregator(ABC):
     self.w_content_df.to_pickle(pickle)
 
 if __name__ == '__main__':
-  #debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
   w_all_content = w_ContentAggregator() 
   #w_all_content.read_pickle("content.pkl")
   for reddit in yaml_data['reddits'] :
