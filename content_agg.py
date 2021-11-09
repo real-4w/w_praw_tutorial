@@ -17,6 +17,7 @@ class Source(ABC):
 
 class RedditSource(Source):
   #dirty access to yaml_data for 'client_id' and 'client_secret'
+  #def
   def connect(self):
     self.reddit_con = praw.Reddit(client_id=yaml_data['client_id'], client_secret=yaml_data['client_secret'], grant_type_access='client_credentials', user_agent='script/1.0')
     return self.reddit_con
