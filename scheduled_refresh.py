@@ -6,10 +6,9 @@ import w_yaml as w_y
 
 count = 0
 
-def sensor():
+def trigger():
     global count
     debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
-    print(debug)
     count += 1
     sched.print_jobs()
     print('Refreshed: ' , count)
@@ -20,14 +19,14 @@ def sensor():
         reddit_new.open_urls()
 
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(sensor,'cron',minute='*')
+sched.add_job(trigger,'cron',minute='*/15')
 sched.start()
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    sensor()
+    trigger()
     return "Content refresh scheduler is now running!"
 
 if __name__ == "__main__":
