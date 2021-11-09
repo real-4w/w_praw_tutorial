@@ -16,10 +16,11 @@ class Source(ABC):
     pass
 
 class RedditSource(Source):
-  #dirty access to yaml_data for 'client_id' and 'client_secret'
-  #def
-  def connect(self):
-    self.reddit_con = praw.Reddit(client_id=yaml_data['client_id'], client_secret=yaml_data['client_secret'], grant_type_access='client_credentials', user_agent='script/1.0')
+  # fixed: dirty access to yaml_data for 'client_id' and 'client_secret'
+  def connect(self, client_id: str, client_secret: str):
+  #def connect(self):
+    #self.reddit_con = praw.Reddit(client_id=yaml_data['client_id'], client_secret=yaml_data['client_secret'], grant_type_access='client_credentials', user_agent='script/1.0')
+    self.reddit_con = praw.Reddit(client_id=client_id, client_secret=client_secret, grant_type_access='client_credentials', user_agent='script/1.0')
     return self.reddit_con
 
   def fetch(self):
@@ -32,7 +33,7 @@ class RedditNew(RedditSource):
       RedditSource (string): Should contain Reddit's r/<name>
   """
   def __init__(self, w_reddit: str) -> None:
-    self.reddit_con = super().connect()
+    self.reddit_con = super().connect(yaml_data['client_id'], yaml_data['client_secret'])
     self.new_submissions = []
     self.w_reddit = w_reddit                                                              
     self.w_len = 0  
