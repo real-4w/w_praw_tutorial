@@ -32,8 +32,9 @@ class RedditNew(RedditSource):
   Args:
       RedditSource (string): Should contain Reddit's r/<name>
   """
-  def __init__(self, w_reddit: str) -> None:
-    self.reddit_con = super().connect(yaml_data['client_id'], yaml_data['client_secret'])
+  def __init__(self, w_reddit: str, client_id: str, client_secret: str) -> None:
+  #def __init__(self, w_reddit: str) -> None:
+    self.reddit_con = super().connect(client_id, client_secret)
     self.new_submissions = []
     self.w_reddit = w_reddit                                                              
     self.w_len = 0  
@@ -151,7 +152,7 @@ if __name__ == '__main__':
   w_all_content = w_ContentAggregator() 
   #w_all_content.read_pickle("content.pkl")
   for reddit in yaml_data['reddits'] :
-    reddit_new = RedditNew(reddit)
+    reddit_new = RedditNew(reddit, yaml_data['client_id'], yaml_data['client_secret'])
     reddit_new.fetch(int(yaml_data['number']))
     reddit_new.print_info()
     reddit_new.open_urls()
