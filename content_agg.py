@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
-from re import sub
 import webbrowser, praw, feedparser, datetime
 import pandas as pd
 import w_yaml as w_y
+
+debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
 
 class Source(ABC):
   
@@ -144,7 +145,7 @@ class w_ContentAggregator(ABC):
     self.w_content_df.to_pickle(pickle)
 
 if __name__ == '__main__':
-  debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
+  #debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
   w_all_content = w_ContentAggregator() 
   #w_all_content.read_pickle("content.pkl")
   for reddit in yaml_data['reddits'] :
