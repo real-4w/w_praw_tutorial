@@ -3,8 +3,6 @@ import webbrowser, praw, feedparser, datetime
 import pandas as pd
 import w_yaml as w_y
 
-
-
 class Source(ABC):
   
   @abstractmethod
@@ -16,10 +14,13 @@ class Source(ABC):
     pass
 
 class RedditSource(Source):
-  # this function is fixed: dirty access to yaml_data for 'client_id' and 'client_secret'
+  """Returns a connection to Reddit using valid Redit client_id & client_secret.
+
+  Args:
+      RedditSource (client_id: str - Reddit client id
+              client_secret: str - Reddit client secret)
+  """
   def connect(self, client_id: str, client_secret: str):
-  #def connect(self):
-    #self.reddit_con = praw.Reddit(client_id=yaml_data['client_id'], client_secret=yaml_data['client_secret'], grant_type_access='client_credentials', user_agent='script/1.0')
     self.reddit_con = praw.Reddit(client_id=client_id, client_secret=client_secret, grant_type_access='client_credentials', user_agent='script/1.0')
     return self.reddit_con
 
@@ -30,7 +31,9 @@ class RedditNew(RedditSource):
   """Create a class for getting a Reddit r/<name>.
 
   Args:
-      RedditSource (string): Should contain Reddit's r/<name>
+      RedditNew (w_reddit: str - Reddit's r/<name>
+                 client_id: str - Reddit client id
+                 client_secret: str - Reddit client secret)
   """
   def __init__(self, w_reddit: str, client_id: str, client_secret: str) -> None:
   #def __init__(self, w_reddit: str) -> None:
