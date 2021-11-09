@@ -16,7 +16,7 @@ class Source(ABC):
     pass
 
 class RedditSource(Source):
-  # fixed: dirty access to yaml_data for 'client_id' and 'client_secret'
+  # this function is fixed: dirty access to yaml_data for 'client_id' and 'client_secret'
   def connect(self, client_id: str, client_secret: str):
   #def connect(self):
     #self.reddit_con = praw.Reddit(client_id=yaml_data['client_id'], client_secret=yaml_data['client_secret'], grant_type_access='client_credentials', user_agent='script/1.0')
