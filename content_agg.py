@@ -43,7 +43,6 @@ class RedditNew(RedditSource):
                  client_secret: str - Reddit client secret)
   """
   def __init__(self, w_reddit: str, client_id: str, client_secret: str) -> None:
-  #def __init__(self, w_reddit: str) -> None:
     self.reddit_con = super().connect(client_id, client_secret)
     self.new_submissions = []
     self.w_reddit = w_reddit                                                              
