@@ -14,13 +14,20 @@ class Source(ABC):
     pass
 
 class RedditSource(Source):
-  """Returns a connection to Reddit using valid Redit client_id & client_secret.
+  """Create a class for getting a Reddit r/<name>.
 
-  Args:
-      RedditSource (client_id: str - Reddit client id
-              client_secret: str - Reddit client secret)
+  Args: <none>
   """
   def connect(self, client_id: str, client_secret: str):
+    """Connect to a Reddit praw
+
+    Args:
+        client_id (str): Reddit client_id
+        client_secret (str): Reddit client_secret
+
+    Returns:
+        [type]: [description]
+    """
     self.reddit_con = praw.Reddit(client_id=client_id, client_secret=client_secret, grant_type_access='client_credentials', user_agent='script/1.0')
     return self.reddit_con
 
