@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-import webbrowser, praw, feedparser, datetime, twitter, sys
+import webbrowser, praw, feedparser, datetime
 import pandas as pd
-import w_yaml as w_y
+#import w_yaml as w_y
 
 class Source(ABC):
   
@@ -121,7 +121,9 @@ class RSSNew(RSSSource):
     return (self.w_len)
 
   def urls(self):
-    return (self.w_rss_df['url'])
+    for url in self.w_rss_df['url'] : 
+      return(url)
+    #return (self.w_rss_df['url'])
 
   def print_info(self):
     print(f"\nR/{self.w_rss}: {self.w_len}")
