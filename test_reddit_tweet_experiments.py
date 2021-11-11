@@ -17,12 +17,12 @@ if __name__ == '__main__':
         #print(w_all_content)
     #w_all_content.write_pickle("content.pkl")
   
-    for rss in yaml_data['rss'] :
-        rss_new = w_c_a.RSSNew(rss)
-        rss_new.fetch(int(yaml_data['number']))
-        rss_new.print_info()
-        rss_new.open_urls()
-        #rss_new.write_pickle(f"{rss}.pkl")
+    #for rss in yaml_data['rss'] :
+    #    rss_new = w_c_a.RSSNew(rss)
+    #    rss_new.fetch(int(yaml_data['number']))
+    #    rss_new.print_info()
+    #    rss_new.open_urls()
+    #    #rss_new.write_pickle(f"{rss}.pkl")
 
     debug, yaml_data = w_y.ProcessYAML('twitter.yaml')  
     w_api_key = yaml_data['API_Key']
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     api = twitter.Api(consumer_key=w_api_key, consumer_secret=w_api_key_secret,
                         access_token_key=w_access_token, access_token_secret=w_access_token_secret)
     try:
-        status = api.PostUpdate(f"Hmmmm: {rss_new.urls()}")
+        status = api.PostUpdate(f"Righto: {reddit_new.urls()}")
     except UnicodeDecodeError:
         print("Your message could not be encoded.  Perhaps it contains non-ASCII characters? ")
         print("Try explicitly specifying the encoding with the --encoding flag")
