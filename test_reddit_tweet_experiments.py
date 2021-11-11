@@ -167,8 +167,8 @@ if __name__ == '__main__':
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit, yaml_data['client_id'], yaml_data['client_secret'])
     reddit_new.fetch(int(yaml_data['number']))
-    #reddit_new.print_info()
-    #reddit_new.open_urls()
+    reddit_new.print_info()
+    reddit_new.open_urls()
     
     print(reddit_new.urls())
     debug, yaml_data = w_y.ProcessYAML('twitter.yaml')  
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     api = twitter.Api(consumer_key=w_api_key, consumer_secret=w_api_key_secret,
                         access_token_key=w_access_token, access_token_secret=w_access_token_secret)
     try:
-        status = api.PostUpdate(f"This is interesting: {reddit_new.urls()}")
+        status = api.PostUpdate(f"Wow: {reddit_new.urls()}")
     except UnicodeDecodeError:
         print("Your message could not be encoded.  Perhaps it contains non-ASCII characters? ")
         print("Try explicitly specifying the encoding with the --encoding flag")

@@ -1,6 +1,6 @@
 from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
-import content_agg as c_a
+import w_content_agg as c_a
 import w_yaml as w_y
 from tzlocal import get_localzone
 
