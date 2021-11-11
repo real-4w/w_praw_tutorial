@@ -9,7 +9,7 @@ if __name__ == '__main__':
     for reddit in yaml_data['reddits'] :
         reddit_new = w_c_a.RedditNew(reddit, yaml_data['client_id'], yaml_data['client_secret'])
         reddit_new.fetch(int(yaml_data['number']))
-        #reddit_new.print_info()
+        reddit_new.print_info()
         reddit_new.open_urls()
         #reddit_new.write_pickle(f"{reddit}.pkl")
         print(reddit_new.urls())
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     for rss in yaml_data['rss'] :
         rss_new = w_c_a.RSSNew(rss)
         rss_new.fetch(int(yaml_data['number']))
-        #rss_new.print_info()
+        rss_new.print_info()
         rss_new.open_urls()
         #rss_new.write_pickle(f"{rss}.pkl")
 
