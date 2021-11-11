@@ -88,6 +88,9 @@ class RedditNew(RedditSource):
   def write_pickle(self, pickle: str):
     self.w_reddit_df.to_pickle(pickle)
 
+  def tweet_reddit_content(self):
+    
+
 class RSSSource(Source):
   def connect(self):
       pass
