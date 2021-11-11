@@ -179,7 +179,7 @@ if __name__ == '__main__':
     api = twitter.Api(consumer_key=w_api_key, consumer_secret=w_api_key_secret,
                         access_token_key=w_access_token, access_token_secret=w_access_token_secret)
     try:
-        status = api.PostUpdate("Willem's bot here...")
+        status = api.PostUpdate(f"This is interesting: {reddit_new.urls()}")
     except UnicodeDecodeError:
         print("Your message could not be encoded.  Perhaps it contains non-ASCII characters? ")
         print("Try explicitly specifying the encoding with the --encoding flag")
