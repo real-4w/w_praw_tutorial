@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import webbrowser, praw, feedparser, datetime
+import webbrowser, praw, feedparser, datetime, twitter, sys
 import pandas as pd
 import w_yaml as w_y
 
@@ -69,12 +69,14 @@ class RedditNew(RedditSource):
     return (self.w_len)
 
   def urls(self):
-    return (self.w_reddit_df['url'])
+    for url in self.w_reddit_df['url'] : 
+      return(url)
+    #return (self.w_reddit_df['url'])
 
   def print_info(self):
     print(f"\nR/{self.w_reddit}: {self.w_len}")
     print(self.w_reddit_df)
-      
+     
   def open_urls(self):
     for tab in self.w_reddit_df['url'] : 
       webbrowser.open_new(tab)
@@ -87,9 +89,6 @@ class RedditNew(RedditSource):
 
   def write_pickle(self, pickle: str):
     self.w_reddit_df.to_pickle(pickle)
-
-  def tweet_reddit_content(self):
-    
 
 class RSSSource(Source):
   def connect(self):
@@ -161,14 +160,34 @@ class w_ContentAggregator(ABC):
     self.w_content_df.to_pickle(pickle)
 
 if __name__ == '__main__':
+  #this realy should go into a seperatefile to keep things tidy.
   debug, yaml_data = w_y.ProcessYAML('reddit.yaml')  
   w_all_content = w_ContentAggregator() 
   #w_all_content.read_pickle("content.pkl")
   for reddit in yaml_data['reddits'] :
     reddit_new = RedditNew(reddit, yaml_data['client_id'], yaml_data['client_secret'])
     reddit_new.fetch(int(yaml_data['number']))
-    reddit_new.print_info()
-    reddit_new.open_urls()
+    #reddit_new.print_info()
+    #reddit_new.open_urls()
+    
+    print(reddit_new.urls())
+    debug, yaml_data = w_y.ProcessYAML('twitter.yaml')  
+    w_api_key = yaml_data['API_Key']
+    w_api_key_secret = yaml_data['API_Key_Secret']
+    w_access_token = yaml_data['Access_Token']
+    w_access_token_secret = yaml_data['Access_Token_Secret']
+    api = twitter.Api(consumer_key=w_api_key, consumer_secret=w_api_key_secret,
+                        access_token_key=w_access_token, access_token_secret=w_access_token_secret)
+    try:
+        status = api.PostUpdate("Willem's bot here...")
+    except UnicodeDecodeError:
+        print("Your message could not be encoded.  Perhaps it contains non-ASCII characters? ")
+        print("Try explicitly specifying the encoding with the --encoding flag")
+        sys.exit(2)
+
+    print("{0} just posted: {1}".format(status.user.name, status.text))  
+
+
     #reddit_new.write_pickle(f"{reddit}.pkl")
     #w_all_content.add_content_df(reddit_new.return_df())
   #print(w_all_content)
