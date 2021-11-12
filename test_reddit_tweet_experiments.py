@@ -24,19 +24,19 @@ if __name__ == '__main__':
     #    rss_new.open_urls()
     #    #rss_new.write_pickle(f"{rss}.pkl")
 
-    debug, yaml_data = w_y.ProcessYAML('twitter.yaml')  
-    w_api_key = yaml_data['API_Key']
-    w_api_key_secret = yaml_data['API_Key_Secret']
-    w_access_token = yaml_data['Access_Token']
-    w_access_token_secret = yaml_data['Access_Token_Secret']
-    api = twitter.Api(consumer_key=w_api_key, consumer_secret=w_api_key_secret,
-                        access_token_key=w_access_token, access_token_secret=w_access_token_secret)
-    try:
-        status = api.PostUpdate(f"Righto: {reddit_new.urls()}")
-    except UnicodeDecodeError:
-        print("Your message could not be encoded.  Perhaps it contains non-ASCII characters? ")
-        print("Try explicitly specifying the encoding with the --encoding flag")
-        sys.exit(2)
+    #debug, yaml_data = w_y.ProcessYAML('twitter.yaml')  
+    #w_api_key = yaml_data['API_Key']
+    #w_api_key_secret = yaml_data['API_Key_Secret']
+    #w_access_token = yaml_data['Access_Token']
+    #w_access_token_secret = yaml_data['Access_Token_Secret']
+    #api = twitter.Api(consumer_key=w_api_key, consumer_secret=w_api_key_secret,
+    #                    access_token_key=w_access_token, access_token_secret=w_access_token_secret)
+    #try:
+    #    status = api.PostUpdate(f"Righto: {reddit_new.urls()}")
+    #except UnicodeDecodeError:
+    #    print("Your message could not be encoded.  Perhaps it contains non-ASCII characters? ")
+    #    print("Try explicitly specifying the encoding with the --encoding flag")
+    #    sys.exit(2)
 
-    print("{0} just posted: {1}".format(status.user.name, status.text))  
+    #print("{0} just posted: {1}".format(status.user.name, status.text))  
 
