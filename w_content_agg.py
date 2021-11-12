@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 import webbrowser, praw, feedparser, datetime
 import pandas as pd
-#import w_yaml as w_y
 
 class Source(ABC):
   
