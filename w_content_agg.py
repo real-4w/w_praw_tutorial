@@ -69,9 +69,7 @@ class RedditNew(RedditSource):
     return (self.w_len)
 
   def urls(self):
-    for url in self.w_reddit_df['url'] : 
-      return(url)
-    #return (self.w_reddit_df['url'])
+    return (self.w_reddit_df['url'])
 
   def print_info(self):
     print(f"\nR/{self.w_reddit}: {self.w_len}")
