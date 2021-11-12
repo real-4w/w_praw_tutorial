@@ -12,7 +12,7 @@ if __name__ == '__main__':
         reddit_new.print_info()
         reddit_new.open_urls()
         #reddit_new.write_pickle(f"{reddit}.pkl")
-        print(reddit_new.urls())
+        #print(reddit_new.urls())
         #w_all_content.add_content_df(reddit_new.return_df())
         #print(w_all_content)
     #w_all_content.write_pickle("content.pkl")
