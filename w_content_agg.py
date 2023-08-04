@@ -95,7 +95,6 @@ class RSSSource(Source):
       pass
 
 class RSSNew(RSSSource):
-
   def __init__(self, w_rss: str) -> None:
     self.w_rss = w_rss
     self.w_len = 0
